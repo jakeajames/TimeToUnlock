@@ -92,10 +92,10 @@ NSMutableString *passcodeFromTime() {
     }
     
     pass = (isReversed) ? [reverseStr(pass) mutableCopy] : pass;
-    
-    if (twoLastDigits && ![twoLastDigits isEqualToString:@""]) [pass appendString:twoLastDigits];
-    else [pass appendString:@"00"];
-    
+    if (realPasscode.length == 6) {
+        if (twoLastDigits && ![twoLastDigits isEqualToString:@""]) [pass appendString:twoLastDigits];
+        else [pass appendString:@"00"];
+    }
     return pass;
 }
 
