@@ -1,9 +1,9 @@
 Package: com.jakeashacks.timetounlock
 Name: TimeToUnlock
-Depends: mobilesubstrate
-Version: 0.0.1
+Depends: mobilesubstrate, firmware(>=10.0), preferenceloader
+Version: 1.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Set current time as your passcode. Configure from Settings.
 Maintainer: Jake James
 Author: Jake James
 Section: Tweaks
