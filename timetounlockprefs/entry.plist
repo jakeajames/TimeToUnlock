@@ -15,7 +15,7 @@
 		<key>isController</key>
 		<true/>
 		<key>label</key>
-		<string>TimeToUnlockPrefs</string>
+		<string>TimeToUnlock</string>
 	</dict>
 </dict>
 </plist>

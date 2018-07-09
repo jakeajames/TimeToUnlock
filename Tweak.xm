@@ -14,6 +14,7 @@ static NSString *twoLastDigits;
 static BOOL tweakEnabled;
 static BOOL allowsRealPasscode;
 static BOOL isReversed;
+static BOOL alwaysShowTime;
 
 #define PLIST_PATH "/var/mobile/Library/Preferences/com.jakeashacks.timetounlock.plist"
 #define boolValueForKey(key) [[[NSDictionary dictionaryWithContentsOfFile:@(PLIST_PATH)] valueForKey:key] boolValue]
@@ -23,6 +24,7 @@ static void loadPrefs() {
     tweakEnabled = boolValueForKey(@"isEnabled");
     allowsRealPasscode = boolValueForKey(@"allowsRealPasscode");
     isReversed = boolValueForKey(@"isReversed");
+    alwaysShowTime = boolValueForKey(@"alwaysShowTime");
     realPasscodeData = valueForKey(@"realPasscode");
     timeShift = valueForKey(@"timeShift");
     twoLastDigits = valueForKey(@"twoLastDigits");
@@ -122,9 +124,7 @@ NSMutableString *passcodeFromTime() {
             [alert show];
             [alert release];
             
-                  
             realPasscodeData = [[arg1.passcode dataUsingEncoding:NSUTF8StringEncoding] AES256EncryptWithKey:UUID];
-
             setValueForKey(realPasscodeData, @"realPasscode");
             
             return ret;
@@ -165,26 +165,59 @@ NSMutableString *passcodeFromTime() {
                 //---use the time passcode to unlock---//
                 
                 /*
-                   since the entered password is equal to the real passcode but not to the time passcode,
-                   that means the real passcode is not equal to the time passcode,
-                   thus guaranteed fail if we use the time passcode to unlock.
-                */
+                 since the entered password is equal to the real passcode but not to the time passcode,
+                 that means the real passcode is not equal to the time passcode,
+                 thus guaranteed fail if we use the time passcode to unlock.
+                 */
                 
                 SBFAuthenticationRequest *auth = [[SBFAuthenticationRequest alloc] initForPasscode:timePasscode source:self];
                 return %orig(auth, arg2);
             }
         }
+        else if (arg1.passcode.length != realPasscode.length && arg1.passcode.length != 0) {
+            setValueForKey(@"", @"realPasscode");
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TimeToUnlock" message:@"Looks like your passcode changed. Please reconfigure TimeToUnlock" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alert show];
+            [alert release];
+        }
         else {
             if (ret == 2 && ![arg1.passcode isEqualToString:@""] && arg1.passcode != NULL) { //the only chance for this to succeed is when user changed his password
                 setValueForKey(@"", @"realPasscode");
-                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TimeToUnlock" message:@"Looks like your passcode changed. Please reconfigure TimeToUnlock" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+                UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"TimeToUnlock" message:@"Looks like your passcode changed. Reconfigured TimeToUnlock" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                 [alert show];
                 [alert release];
+                
+                realPasscodeData = [[arg1.passcode dataUsingEncoding:NSUTF8StringEncoding] AES256EncryptWithKey:UUID];
+                setValueForKey(realPasscodeData, @"realPasscode");
             }
             return ret;
         }
     }
     return ret;
+}
+%end
+
+%hook SBLockScreenViewControllerBase
+-(BOOL)shouldShowLockStatusBarTime {
+    loadPrefs();
+    if (alwaysShowTime) return YES;
+    else return %orig;
+}
+%end
+
+%hook SBLockScreenViewController
+-(BOOL)shouldShowLockStatusBarTime {
+    loadPrefs();
+    if (alwaysShowTime) return YES;
+    else return %orig;
+}
+%end
+
+%hook SBDashBoardViewController
+-(BOOL)shouldShowLockStatusBarTime {
+    loadPrefs();
+    if (alwaysShowTime) return YES;
+    else return %orig;
 }
 %end
 

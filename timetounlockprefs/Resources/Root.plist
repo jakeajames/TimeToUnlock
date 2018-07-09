@@ -42,6 +42,20 @@
 			<key>PostNotification</key>
 			<string>com.jakeashacks.timetounlock/prefschanged</string>
 			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>key</key>
+			<string>alwaysShowTime</string>
+			<key>label</key>
+			<string>Always show time</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
 			<string>PSEditTextCell</string>
 			<key>defaults</key>
 			<string>com.jakeashacks.timetounlock</string>
@@ -52,7 +66,7 @@
 			<key>label</key>
 			<string>Time Shift</string>
 			<key>placeholder</key>
-			<string>Minutes to add or subtract</string>
+			<string>Amount of minutes to add</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
