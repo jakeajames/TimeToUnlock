@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>General</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>key</key>
+			<string>isEnabled</string>
+			<key>label</key>
+			<string>Enable</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>key</key>
+			<string>allowsRealPasscode</string>
+			<key>label</key>
+			<string>Allow real passcode unlock</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>detail</key>
+			<string>PSDetailController</string>
+			<key>key</key>
+			<string>timeShift</string>
+			<key>label</key>
+			<string>Time Shift</string>
+			<key>placeholder</key>
+			<string>Minutes to add or subtract</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<false/>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>key</key>
+			<string>isReversed</string>
+			<key>label</key>
+			<string>Reverse result passcode</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>6-digit passcode options</string>
+		</dict>
+		<dict>
+			<key>PostNotification</key>
+			<string>com.jakeashacks.timetounlock/prefschanged</string>
+			<key>cell</key>
+			<string>PSEditTextCell</string>
+			<key>defaults</key>
+			<string>com.jakeashacks.timetounlock</string>
+			<key>detail</key>
+			<string>PSDetailController</string>
+			<key>key</key>
+			<string>twoLastDigits</string>
+			<key>label</key>
+			<string>Two last digits</string>
+			<key>placeholder</key>
+			<string>00</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Info</string>
+		</dict>
+		<dict>
+			<key>icon</key>
+			<string>twitter.png</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Follow me :) ~@Jakeashacks</string>
+			<key>action</key>
+			<string>myTwitter:</string>
+		</dict>
+		<dict>
+			<key>icon</key>
+			<string>github.png</string>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Source Code</string>
+			<key>action</key>
+			<string>sourceCode:</string>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>TimeToUnlock</string>
+</dict>
+</plist>
