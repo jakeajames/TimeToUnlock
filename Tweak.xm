@@ -47,34 +47,6 @@ NSString *reverseStr(NSString *string) {
     return reversed;
 }
 
-int numberOfCiphers(int num) {
-    int result = 1;
-    while ((num /= 10) > 0) result++;
-    return result;
-}
-
-NSString *timeShiftStrBy(NSString *what, NSString *byWhat) {
-    NSMutableString *result = [NSMutableString string];
-    
-    NSScanner *scanner1 = [NSScanner scannerWithString:what];
-    NSScanner *scanner2 = [NSScanner scannerWithString:byWhat];
-    
-    int intWhat, intByWhat, intSum;
-    
-    [scanner1 scanInt:&intWhat];
-    [scanner2 scanInt:&intByWhat];
-    intSum = intByWhat + intWhat;
-    
-    long len = [what length];
-    
-    for (int i = 0; i < (len - numberOfCiphers(intSum)); i++) {
-        [result appendString:@"0"];
-    }
-    [result appendString:[NSString stringWithFormat:@"%d", intSum]];
-    
-    return result;
-}
-
 NSMutableString *passcodeFromTime() {
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setLocale:[NSLocale currentLocale]];
@@ -87,13 +59,20 @@ NSMutableString *passcodeFromTime() {
     
     [formatter setDateFormat:(is24h) ? @"HHmm" : @"hhmm"];
     
-    NSMutableString *pass = [[formatter stringFromDate:[NSDate date]] mutableCopy];
+    NSMutableString *pass;
     
     if (timeShift && [timeShift length]) {
-        pass = [timeShiftStrBy(pass, timeShift) mutableCopy];
+        
+        int shift;
+        NSScanner *scanner = [NSScanner scannerWithString:timeShift];
+        [scanner scanInt:&shift];
+        
+        pass = [[formatter stringFromDate:[[NSDate date] dateByAddingTimeInterval:shift * 60]] mutableCopy];
+    }
+    else {
+        pass = [[formatter stringFromDate:[NSDate date]] mutableCopy];
     }
     
-    pass = (isReversed) ? [reverseStr(pass) mutableCopy] : pass;
     if (realPasscode.length == 6) {
         if (twoLastDigits && ![twoLastDigits isEqualToString:@""]) [pass appendString:twoLastDigits];
         else [pass appendString:@"00"];

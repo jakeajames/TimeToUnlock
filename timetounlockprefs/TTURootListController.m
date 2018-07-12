@@ -27,23 +27,13 @@
 
             if (!isNum && [value length]) {
                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message: @"Time shift value must be positive integer"
+                                                    message: @"Time shift value must be positive or negative integer"
                                                     delegate:self 
                                                     cancelButtonTitle:@"OK" 
                                                     otherButtonTitles:nil];
                   [alert show];
                   [alert release];
                   return;      
-            }
-            if (i > 7640 || i < 0) { //max time: 2359; 2359 + 7640 = 9999 = max 4digit value
-                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error"
-                                                    message: @"Time shift value must be from 0 to 7640"
-                                                    delegate:self 
-                                                    cancelButtonTitle:@"OK" 
-                                                    otherButtonTitles:nil];
-                  [alert show];
-                  [alert release];
-                  return;
             }
       }
 
@@ -93,4 +83,10 @@
 -(void)sourceCode:(id)arg1 {
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"https://github.com/jakeajames/TimeToUnlock"]];
 }
+
+-(void)resetSettings:(id)arg1 {
+    [[NSFileManager defaultManager] removeItemAtPath:@"/var/mobile/Library/Preferences/com.jakeashacks.timetounlock.plist" error:nil];
+    [self reloadSpecifiers];
+}
+
 @end

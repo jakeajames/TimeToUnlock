@@ -66,7 +66,7 @@
 			<key>label</key>
 			<string>Time Shift</string>
 			<key>placeholder</key>
-			<string>Amount of minutes to add</string>
+			<string>Minutes to add/subtract</string>
 		</dict>
 		<dict>
 			<key>PostNotification</key>
@@ -103,6 +103,20 @@
 			<string>Two last digits</string>
 			<key>placeholder</key>
 			<string>00</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>Destructive</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSButtonCell</string>
+			<key>label</key>
+			<string>Reset Settings</string>
+			<key>action</key>
+			<string>resetSettings:</string>
 		</dict>
 		<dict>
 			<key>cell</key>
