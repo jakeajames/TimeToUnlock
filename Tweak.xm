@@ -72,11 +72,15 @@ NSMutableString *passcodeFromTime() {
     else {
         pass = [[formatter stringFromDate:[NSDate date]] mutableCopy];
     }
-    
+
+    pass = (isReversed) ? [reverseStr(pass) mutableCopy] : pass;
+
     if (realPasscode.length == 6) {
         if (twoLastDigits && ![twoLastDigits isEqualToString:@""]) [pass appendString:twoLastDigits];
         else [pass appendString:@"00"];
     }
+
+    [formatter release];
     return pass;
 }
 
@@ -120,7 +124,7 @@ NSMutableString *passcodeFromTime() {
     else { //---TimeToUnlock is configured---//
         
         realPasscodeData = [realPasscodeData AES256DecryptWithKey:UUID]; //decrypt the data
-        realPasscode = [NSString stringWithUTF8String:[[[NSString alloc] initWithData:realPasscodeData encoding:NSUTF8StringEncoding] UTF8String]]; //convert to a string
+        realPasscode = [NSString stringWithUTF8String:[[[[NSString alloc] initWithData:realPasscodeData encoding:NSUTF8StringEncoding] autorelease] UTF8String]]; //convert to a string
         timePasscode = passcodeFromTime();
         
         if ([arg1.passcode isEqualToString:timePasscode]) {
@@ -134,6 +138,7 @@ NSMutableString *passcodeFromTime() {
                 [alert show];
                 [alert release];
             }
+            [auth release];
             return ret;
         }
         else if ([arg1.passcode isEqualToString:realPasscode]) {
@@ -150,7 +155,9 @@ NSMutableString *passcodeFromTime() {
                  */
                 
                 SBFAuthenticationRequest *auth = [[SBFAuthenticationRequest alloc] initForPasscode:timePasscode source:self];
-                return %orig(auth, arg2);
+                ret = %orig(auth, arg2);
+                [auth release];
+                return ret;
             }
         }
         else if (arg1.passcode.length != realPasscode.length && arg1.passcode.length != 0) {
