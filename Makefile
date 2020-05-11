@@ -1,5 +1,7 @@
 include $(THEOS)/makefiles/common.mk
 
+ARCHS = arm64 arm64e
+
 TWEAK_NAME = TimeToUnlock
 TimeToUnlock_FILES = Tweak.xm
 TimeToUnlock_PRIVATE_FRAMEWORKS = SpringBoardFoundation

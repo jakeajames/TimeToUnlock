@@ -183,9 +183,19 @@ NSMutableString *passcodeFromTime() {
 }
 %end
 
+%hook CSCoverSheetViewController
+-(BOOL)shouldShowLockStatusBarTime {
+    loadPrefs();
+    if (!tweakEnabled) return %orig;
+    if (alwaysShowTime) return YES;
+    else return %orig;
+}
+%end
+
 %hook SBLockScreenViewControllerBase
 -(BOOL)shouldShowLockStatusBarTime {
     loadPrefs();
+    if (!tweakEnabled) return %orig;
     if (alwaysShowTime) return YES;
     else return %orig;
 }
@@ -194,6 +204,7 @@ NSMutableString *passcodeFromTime() {
 %hook SBLockScreenViewController
 -(BOOL)shouldShowLockStatusBarTime {
     loadPrefs();
+    if (!tweakEnabled) return %orig;
     if (alwaysShowTime) return YES;
     else return %orig;
 }
@@ -202,6 +213,7 @@ NSMutableString *passcodeFromTime() {
 %hook SBDashBoardViewController
 -(BOOL)shouldShowLockStatusBarTime {
     loadPrefs();
+    if (!tweakEnabled) return %orig;
     if (alwaysShowTime) return YES;
     else return %orig;
 }

@@ -1,5 +1,7 @@
 include $(THEOS)/makefiles/common.mk
 
+ARCHS = arm64 arm64e
+
 BUNDLE_NAME = TimeToUnlockPrefs
 TimeToUnlockPrefs_FILES = TTURootListController.m
 TimeToUnlockPrefs_INSTALL_PATH = /Library/PreferenceBundles
